@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OggiTempo</title>
+    <link rel="icon" type="image/x-icon" href="./images/LogoSymbol.png" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <nav id="mainnav">
+      <div id="mainlogo">
+        <img src="./images/LogoVertical.png" alt="logo" />
+      </div>
+      <div id="language">
+        <span id="span1"
+          ><img src="./icons/Language.png" alt="language"
+        /></span>
+        <span id="span2">ENG</span>
+      </div>
+    </nav>
+
+    <nav id="mobilenav">
+      <div id="mobilelogo">
+        <img src="./images/LogoHorizontal.png" alt="logo" />
+      </div>
+      <div id="hamburger">
+        <img src="./icons/MenuBar.png" alt="hamburger" />
+      </div>
+    </nav>
+    <div id="collapse">
+      <ul id="options">
+        <li class="mobileoption">
+          <span class="mobileoptionlogo"
+            ><img src="./icons/DarkTheme.png" alt="themes"
+          /></span>
+          <span>Themes</span>
+        </li>
+        <li class="mobileoption">
+          <span class="mobileoptionlogo"
+            ><img src="./icons/Language.png" alt="language"
+          /></span>
+          <span>ENG/ITA</span>
+        </li>
+      </ul>
+    </div>
+
+    <main>
+      <nav id="subnav">
+        <form class="searchbar">
+          <input
+            type="text"
+            name="city"
+            autocomplete="off"
+            placeholder="Search your city..."
+          />
+          <button type="submit">
+            <img src="./icons/SearchBar.png" alt="search" />
+          </button>
+        </form>
+        <button id="subthemes" type="button">
+          <img src="./icons/DarkTheme.png" alt="darktheme" />
+        </button>
+      </nav>
+
+      <div id="carousel">
+        <section id="landingsection">
+          <h1>how are you today?</h1>
+          <form class="searchbar">
+            <input
+              type="text"
+              name="city"
+              autocomplete="off"
+              placeholder="Search your city..."
+            />
+            <button type="submit">
+              <img src="./icons/SearchBar.png" alt="search" />
+            </button>
+          </form>
+        </section>
+
+        <section id="resultsection">
+          <h1>ROME</h1>
+          <div id="resultbox">
+            <div id="temp">
+              <h2>SUNNY</h2>
+              <div>35<span>&#176;</span></div>
+            </div>
+            <div id="details">
+              <h2>DETAILS</h2>
+              <hr />
+              <table>
+                <tr>
+                  <td>Feels like:</td>
+                  <td>38<span>&#176;</span></td>
+                </tr>
+                <tr>
+                  <td>Humidity:</td>
+                  <td>30%</td>
+                </tr>
+                <tr>
+                  <td>Wind:</td>
+                  <td>10.3km/h</td>
+                </tr>
+                <tr>
+                  <td>Visibility:</td>
+                  <td>10km</td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="col" id="morning">
+              <h3>Morning</h3>
+              <div class="visual">
+                <img src="./icons/Sun.png" alt="morning" />
+              </div>
+            </div>
+            <div class="col" id="afternoon">
+              <h3>Afternoon</h3>
+              <div class="visual">
+                <img src="./icons/Lightning.png" alt="afernoon" />
+              </div>
+            </div>
+            <div class="col" id="night">
+              <h3>Night</h3>
+              <div class="visual">
+                <img src="./icons/Snowy.png" alt="night" />
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

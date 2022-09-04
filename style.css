@@ -1,0 +1,535 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+
+/* 
+APPROACH:
+Elements fixed limitation in size (minimal scale with strict limit)
+But relationship is scalable
+
+LAYOUT IDEA: 
+Use Flexbox and Grid in everything (better solution than any other layout technique)
+
+img % guide:
+(if only scale 1 side: the other side will be scaled too, but DIFFERENT scale, because wrapper/img ratio in both sides are different)
+if img > wrapper: (or not strict smaller)
+max-width = width (same effect, relative to wrapper)
+z.B fill: width/height: 100% - relative to wrapper - whatever side touches border first =  object-fit:contain
+                                                    whatever side touches border later =  object-fit:cover
+if img < wrapper:
+width/height: relative to wrapper
+max-width/height: avoid using, relative to img itself
+
+
+
+
+*/
+/* 
+------------------------------------------------------------------------------------------------
+general setup (whole body)
+------------------------------------------------------------------------------------------------
+*/
+
+html {
+  font-size: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.909);
+}
+
+body {
+  background-image: url("./images/BGdark.png");
+  background-size: cover;
+  background-position: center center;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* 
+------------------------------------------------------------------------------------------------
+1. mainnav 
+------------------------------------------------------------------------------------------------
+*/
+
+#mainnav {
+  background-color: #462c4c;
+  height: 100vh;
+  width: 5vw;
+  min-width: 70px;
+  max-width: 90px;
+  padding: 1.2rem; /* use this padding universally for both navbars*/
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#mainnav #mainlogo {
+  width: 100%;
+}
+
+#mainnav #mainlogo img {
+  width: 100%;
+}
+
+#mainnav #language {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 1rem; /*important learning point: fix the height, stop the logo from growing*/
+  width: 100%;
+}
+
+#mainnav #language #span1 {
+  height: 100%;
+  flex: 0 0 1rem; /*important learning point: fix the width: no schrink no grow*/
+}
+
+#mainnav #language #span1 img {
+  width: 100%;
+  object-fit: contain;
+}
+
+#mobilenav,
+#collapse {
+  display: none;
+}
+/* 
+------------------------------------------------------------------------------------------------
+2. main
+------------------------------------------------------------------------------------------------
+*/
+main {
+  width: 100%;
+  padding: 1.2rem 2rem;
+}
+
+/* 
+-------------------------------------------
+2.1 main > subnav
+-------------------------------------------
+*/
+#subnav {
+  height: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+#subnav .searchbar {
+  width: 20rem;
+  border: 2px solid;
+  border-radius: 2rem;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  visibility: hidden;
+}
+
+#subnav .searchbar input {
+  height: 100%;
+  padding-left: 0.5rem;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+
+#subnav .searchbar button {
+  height: 100%;
+  flex: 0 0 2rem;
+  padding: 0.3rem;
+  background: transparent;
+  border: 0;
+}
+
+#subnav .searchbar button img {
+  height: 100%; /*because the img is already square => rescaling only 1 side remains square ratio */
+  object-fit: contain;
+}
+
+::placeholder {
+  color: rgba(255, 255, 255, 0.909);
+}
+
+#subnav #subthemes {
+  width: 2rem;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+#subnav #subthemes img {
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 
+-------------------------------------------
+2.2 main > carousel: landingsection + resultsection
+-------------------------------------------
+*/
+
+#carousel {
+  overflow: hidden;
+  height: calc(100vh - 2rem - 1.2rem);
+  width: 100%;
+}
+
+/* 
+---------------
+landingsection 
+---------------
+*/
+#landingsection {
+  height: calc(100vh - 2rem - 1.2rem);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30vh; /*basic aligning for viewport*/
+}
+#landingsection h1 {
+  font-weight: 300;
+  font-size: 2.5rem;
+  letter-spacing: 0.4rem;
+  padding-left: 0.7rem;
+}
+
+#landingsection .searchbar {
+  width: 30rem;
+  border: 3px solid;
+  border-radius: 2rem;
+  height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#landingsection .searchbar input {
+  height: 100%;
+  padding-left: 1rem;
+  background: transparent;
+  border: 0;
+  outline: none;
+  font-size: 1.5rem;
+  width: 100%; /*key learning point: when the button width is fixed, expand the input to fullest 100%*/
+}
+
+#landingsection .searchbar button {
+  height: 100%;
+  flex: 0 0 4rem; /*key learning point: fix the width of the button*/
+  padding: 0.7rem;
+  background: transparent;
+  border: 0;
+}
+
+#landingsection .searchbar button img {
+  height: 100%; /*key learning point: height touches border first, so use only height 100%*/
+  object-fit: contain;
+}
+/* 
+---------------
+resultsection 
+---------------
+*/
+
+#resultsection {
+  height: calc(100vh - 2rem - 1.2rem);
+  width: 100%;
+  padding-top: 3vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#resultsection h1 {
+  font-weight: 500;
+  font-size: 4.5rem;
+  letter-spacing: 0.6rem;
+  margin-bottom: 3rem;
+}
+
+#resultbox {
+  background-color: #462c4ca7;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  /* height: 55vh;        let the box wrap the content, problem solved easily*/
+  max-height: 700px;
+  width: 65vw;
+  max-width: 900px;
+  border-radius: 2rem;
+  padding: 2rem;
+}
+
+#temp h2 {
+  font-weight: 500;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.2rem;
+}
+#temp div {
+  font-size: 7rem;
+  font-weight: 500;
+  padding-left: 3rem;
+  letter-spacing: 0.3rem;
+}
+
+#details {
+  grid-column: 2/4;
+  padding: 0 4rem;
+}
+
+#details h2 {
+  font-size: 2rem;
+  font-weight: 300;
+  text-align: start;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.2rem;
+}
+
+#details table {
+  text-align: start;
+  width: 100%;
+  padding-top: 0.5rem;
+}
+#details table tr {
+  line-height: 1.5rem;
+  letter-spacing: 0.1rem;
+}
+
+.col {
+  letter-spacing: 0.1rem;
+  padding: 2rem 0;
+}
+
+.col div {
+  height: 7rem;
+  padding: 1rem;
+}
+.col img {
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 
+------------------------------------------------------------------------------------------------
+mobile version
+------------------------------------------------------------------------------------------------
+*/
+@media screen and (max-width: 800px) {
+  #mainnav,
+  #subnav {
+    display: none;
+  }
+  body {
+    flex-direction: column;
+  }
+
+  #mobilenav {
+    height: 3.2rem;
+    padding: 0.8rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    background-color: #462c4c;
+  }
+  #mobilenav img {
+    height: 100%;
+  }
+  #hamburger {
+    height: 100%;
+  }
+
+  #collapse {
+    display: block;
+    position: fixed;
+    /* top: 3.2rem; */
+    top: -100%;
+    width: 100%;
+    height: calc(100vh - 3.2rem);
+    background-color: #462c4c;
+    z-index: 1;
+  }
+
+  #options {
+    padding-left: 1rem;
+  }
+
+  .mobileoption {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: 2.5rem; /*important learning point: fix the height, stop the logo from growing*/
+    padding: 0.5rem 0;
+  }
+
+  .mobileoptionlogo {
+    height: 1.2rem;
+    flex: 0 0 1.2rem; /*important learning point: fix the width: no schrink no grow*/
+    margin-right: 1rem;
+  }
+
+  .mobileoptionlogo img {
+    width: 100%;
+  }
+
+  /* 
+---------------
+landingsection 
+---------------
+*/
+  main {
+    padding: 0; /*nav height changed, change this padding to keep the children height */
+  }
+
+  #landingsection {
+    height: calc(100vh - 3.2rem);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30vh; /*basic aligning for viewport*/
+  }
+  #landingsection h1 {
+    font-weight: 300;
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+    padding-left: 0.5rem;
+  }
+
+  #landingsection .searchbar {
+    width: 80%;
+    border: 2px solid;
+    border-radius: 2rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #landingsection .searchbar input {
+    height: 100%;
+    padding-left: 1rem;
+    background: transparent;
+    border: 0;
+    outline: none;
+    font-size: 1rem;
+    width: 100%; /*key learning point: when the button width is fixed, expand the input to fullest 100%*/
+  }
+
+  #landingsection .searchbar button {
+    height: 100%;
+    flex: 0 0 2.5rem; /*key learning point: fix the width of the button*/
+    padding: 0.4rem;
+    background: transparent;
+    border: 0;
+  }
+
+  #landingsection .searchbar button img {
+    height: 100%; /*key learning point: height touches border first, so use only height 100%*/
+    object-fit: contain;
+  }
+
+  /* 
+---------------
+resultsection 
+---------------
+*/
+
+  #resultsection {
+    height: calc(100vh - 2rem - 1.2rem);
+    width: 100%;
+    padding-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #resultsection h1 {
+    font-weight: 500;
+    font-size: 3rem;
+    letter-spacing: 0.3rem;
+    margin-bottom: 1rem;
+  }
+
+  #resultbox {
+    background-color: #462c4ca7;
+    display: grid;
+    grid-template-areas:
+      "temp . ."
+      "morning afternoon night"
+      "details details details";
+    width: 90vw;
+    border-radius: 2rem;
+    padding: 0rem;
+  }
+
+  #temp {
+    grid-area: temp;
+    padding-top: 1.5rem;
+  }
+
+  #temp h2 {
+    font-weight: 500;
+    font-size: 1.5rem;
+    letter-spacing: 0.2rem;
+  }
+  #temp div {
+    font-size: 7rem;
+    font-weight: 500;
+    padding-left: 3rem;
+    letter-spacing: 0.3rem;
+  }
+
+  #details {
+    grid-area: details;
+    padding: 0 4rem;
+  }
+
+  #details h2 {
+    font-size: 2rem;
+    font-weight: 300;
+    text-align: start;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.2rem;
+  }
+
+  #details table {
+    text-align: start;
+    width: 100%;
+    padding-top: 0.5rem;
+  }
+  #details table tr {
+    line-height: 1.5rem;
+    letter-spacing: 0.1rem;
+  }
+
+  #morning {
+    grid-area: morning;
+  }
+  #afternoon {
+    grid-area: afternoon;
+  }
+  #night {
+    grid-area: night;
+  }
+  .col {
+    letter-spacing: 0.1rem;
+    padding: 2rem 0;
+  }
+
+  .col div {
+    height: 7rem;
+    padding: 1rem;
+  }
+  .col img {
+    height: 100%;
+    object-fit: contain;
+  }
+}
