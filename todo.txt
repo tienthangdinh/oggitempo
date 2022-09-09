@@ -1,1 +1,2 @@
-test github
+square logo icon needed (32*32) is enough
+why not search anything  => try catch 81, 85, at catch do nothing
