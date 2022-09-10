@@ -68,25 +68,50 @@ const carousel = document.querySelector("#carousel");
 const landingsection = document.querySelector("#landingsection");
 const navsearchbar = document.querySelector("#subnav > .searchbar");
 
-listofsearchbars[1].addEventListener("submit", (e) => {
+async function fetchdatafrominputsearch1(e) {
   e.preventDefault();
-  landingsection.style.display = "none";
-  navsearchbar.style.visibility = "visible";
   const city = searchbar1.value;
-  if (city) {
-    getWeather(city);
+  try {
+    const { result, forecastresult } = await getWeather(city);
+    addWeathertoPage(result, forecastresult);
+    landingsection.style.display = "none";
+    navsearchbar.style.visibility = "visible";
     lastsearch = city;
+  } catch (error) {
+    if (language === "eng") {
+      searchbar1.value = "Invalid city, try again ;)";
+    } else {
+      searchbar1.value = "Città non valida, riprova ;)";
+    }
+    console.log("???????????????errorrrrrrrr" + error);
   }
-});
-
-listofsearchbars[0].addEventListener("submit", (e) => {
+  setTimeout(() => {
+    searchbar1.value = "";
+  }, 1000);
+}
+async function fetchdatafrominputsearch0(e) {
   e.preventDefault();
   const city = searchbar0.value;
-  if (city) {
-    getWeather(city);
+  try {
+    const { result, forecastresult } = await getWeather(city);
+    addWeathertoPage(result, forecastresult);
+    landingsection.style.display = "none";
+    navsearchbar.style.visibility = "visible";
     lastsearch = city;
+  } catch (error) {
+    if (language === "eng") {
+      searchbar0.value = "Invalid city, try again ;)";
+    } else {
+      searchbar0.value = "Città non valida, riprova ;)";
+    }
+    console.log("???????????????errorrrrrrrr" + error);
   }
-});
+  setTimeout(() => {
+    searchbar0.value = "";
+  }, 1000);
+}
+listofsearchbars[1].addEventListener("submit", fetchdatafrominputsearch1);
+listofsearchbars[0].addEventListener("submit", fetchdatafrominputsearch0);
 
 const mobilelogo = document.getElementById("mobilelogo");
 const mainlogo = document.getElementById("mainlogo");
@@ -95,6 +120,7 @@ logos.forEach((elem) => {
   elem.addEventListener("click", () => {
     landingsection.style.display = "flex";
     navsearchbar.style.visibility = "hidden";
+    collapse.style.top = "-100%";
   });
 });
 
@@ -113,17 +139,14 @@ const forecast = (city) =>
 const KtoC = (K) => Math.floor(K - 273.15);
 
 async function getWeather(city) {
-  try {
-    const response = await fetch(url(city));
-    const result = await response.json();
-    const forecastresponse = await fetch(forecast(city));
-    const forecastresult = await forecastresponse.json();
-    console.log(result);
-    console.log(forecastresult);
-    addWeathertoPage(result, forecastresult);
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await fetch(url(city));
+  const result = await response.json();
+  const forecastresponse = await fetch(forecast(city));
+  const forecastresult = await forecastresponse.json();
+  console.log(result);
+  console.log(forecastresult);
+
+  return { result, forecastresult };
 }
 
 //----------------add weather result to page----------------
@@ -238,16 +261,19 @@ const langButton = document.getElementById("language");
 const langarray = [langButton, langButtonMobile];
 let language = "eng";
 
+async function changelanguagefrombutton() {
+  if (language === "eng") {
+    changelanguage("ita");
+  } else {
+    changelanguage("eng");
+  }
+  if (landingsection.style.display === "none") {
+    const { result, forecastresult } = await getWeather(lastsearch);
+    addWeathertoPage(result, forecastresult);
+  }
+}
 langarray.forEach((toggle) => {
-  toggle.addEventListener("click", () => {
-    if (language === "eng") {
-      changelanguage("ita");
-      getWeather(lastsearch);
-    } else {
-      changelanguage("eng");
-      getWeather(lastsearch);
-    }
-  });
+  toggle.addEventListener("click", changelanguagefrombutton);
 });
 
 changelanguage = (langoption) => {
@@ -290,6 +316,8 @@ changelanguage = (langoption) => {
     textmorning.innerHTML = "mattina";
     textafternoon.innerHTML = "pomeriggio";
     textnight.innerHTML = "notte";
+    searchbar0.placeholder = "Cerca la tua città...";
+    searchbar1.placeholder = "Cerca la tua città...";
     language = "ita";
   } else {
     // getWeather(lastsearch);
@@ -306,6 +334,8 @@ changelanguage = (langoption) => {
     textmorning.innerHTML = "morning";
     textafternoon.innerHTML = "afternoon";
     textnight.innerHTML = "night";
+    searchbar0.placeholder = "Search your city...";
+    searchbar1.placeholder = "Search your city...";
     language = "eng";
   }
 };
