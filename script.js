@@ -267,7 +267,7 @@ async function changelanguagefrombutton() {
   } else {
     changelanguage("eng");
   }
-  if (landingsection.style.display === "none") {
+  if (landingsection.style.display === "hidden") {
     const { result, forecastresult } = await getWeather(lastsearch);
     addWeathertoPage(result, forecastresult);
   }
