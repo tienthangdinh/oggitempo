@@ -364,6 +364,7 @@ mobile version
     height: calc(100vh - 3.2rem);
     background-color: #462c4c;
     z-index: 1;
+    transition: top 0.2s ease-out;
   }
 
   #options {
